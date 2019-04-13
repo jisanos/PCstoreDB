@@ -8,10 +8,16 @@
    <children>
       <Label layoutX="51.0" layoutY="34.0" prefHeight="34.0" prefWidth="108.0" text="Status" />
       <Label fx:id="status" layoutX="116.0" layoutY="34.0" prefHeight="34.0" prefWidth="100.0" />
-      <TextField fx:id="username" layoutX="94.0" layoutY="160.0" promptText="Username" />
-      <PasswordField fx:id="password" layoutX="94.0" layoutY="209.0" promptText="Password" />
-      <ComboBox fx:id="selectionbox" layoutX="104.0" layoutY="291.0" prefWidth="150.0" promptText="User/Mannager" />
-      <Button fx:id="login" layoutX="402.0" layoutY="94.0" mnemonicParsing="false" onAction="#loginMethod" prefHeight="229.0" prefWidth="171.0" text="Login" />
+      <TextField fx:id="username" layoutX="31.0" layoutY="93.0" promptText="Username" />
+      <PasswordField fx:id="password" layoutX="31.0" layoutY="131.0" promptText="Password" />
+      <ComboBox fx:id="selectionbox" layoutX="41.0" layoutY="166.0" prefWidth="150.0" promptText="User/Mannager" />
+      <Button fx:id="login" layoutX="87.0" layoutY="205.0" mnemonicParsing="false" onAction="#loginMethod" prefHeight="34.0" prefWidth="60.0" text="Login" />
       <Label fx:id="attempt" layoutX="423.0" layoutY="56.0" prefHeight="25.0" prefWidth="130.0" />
+      <Label layoutX="390.0" layoutY="69.0" prefHeight="25.0" prefWidth="143.0" text="Create User Account" />
+      <TextField layoutX="376.0" layoutY="106.0" promptText="Username" />
+      <TextField layoutX="376.0" layoutY="144.0" promptText="First Name" />
+      <TextField layoutX="376.0" layoutY="179.0" promptText="Last Name" />
+      <PasswordField layoutX="376.0" layoutY="222.0" promptText="Password" />
+      <Button layoutX="402.0" layoutY="260.0" mnemonicParsing="false" text="Create Account" />
    </children>
 </AnchorPane>
