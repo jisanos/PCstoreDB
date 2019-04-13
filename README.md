@@ -1,1 +1,1 @@
-A computer store build with JavaFX and SQLite.
+A computer store built with JavaFX and SQLite.
