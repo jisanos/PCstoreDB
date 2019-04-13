@@ -98,12 +98,7 @@ public class LoginController implements Initializable{
 			
 			FXMLLoader loader = new FXMLLoader();
 			
-			
-
-			
 			Pane root = (Pane) loader.load(getClass().getResource("/manager/manager.fxml").openStream());
-			
-			System.out.println("nuun");
 			
 			managerController managerCtrl = (managerController)loader.getController();
 			
@@ -113,6 +108,7 @@ public class LoginController implements Initializable{
 			mngrStage.setTitle("Manager");
 			mngrStage.setResizable(false);
 			mngrStage.show();
+			
 			
 		}
 		catch(IOException cls){
