@@ -66,12 +66,9 @@ public class Model {
 		catch(SQLException cls) {
 			return false;
 		}
-		finally 
-		{
-			{
-				ps.close();
-				rs.close();
-			}	
+		finally {
+			ps.close();
+			rs.close();
 		}
 		
 		

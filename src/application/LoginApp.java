@@ -17,6 +17,7 @@ public class LoginApp extends Application{
 		stage.setTitle("Computer Store");
 		stage.show();
 		
+		
 	}
 	
 	public static void main(String args[]) {
