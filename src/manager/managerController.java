@@ -86,7 +86,7 @@ public class managerController implements Initializable{
 	
 	@FXML
 	private void removeUser(ActionEvent event) throws SQLException {
-		String deleteSql = "DELETE FROM users WHERE username LIKE = ?";
+		String deleteSql = "DELETE FROM users WHERE username = ?";
 		
 		try {
 			Connection connection = ConnectDB.getConnection();
