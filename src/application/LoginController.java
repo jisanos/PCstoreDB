@@ -48,7 +48,7 @@ public class LoginController implements Initializable{
 			this.status.setText("No Connection");
 		}
 		
-		this.selectionbox.setItems(FXCollections.observableArrayList(selection.values()));
+		this.selectionbox.setItems(FXCollections.observableArrayList(selection.values())); //Drop down for manager and user
 	}
 	
 	@FXML

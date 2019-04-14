@@ -8,45 +8,63 @@ import javafx.beans.property.StringProperty;
 
 public class userInf {
 
-	private final StringProperty USERNAME;
+	private StringProperty USERNAME = new SimpleStringProperty();
 	
-	private final StringProperty FIRSTNAME;
+	private StringProperty FIRSTNAME = new SimpleStringProperty();
 	
-	private final StringProperty LASTNAME;
+	private StringProperty LASTNAME = new SimpleStringProperty();
 	
-	private final IntegerProperty BALANCE;
+	private IntegerProperty BALANCE = new SimpleIntegerProperty();
 	
 	public userInf(String username, String firstname, String lastname, Integer balance)
 	{
+
+		this.setUSERNAME(username);
 		
+		this.setFIRSTNAME(firstname);
 		
-		this.USERNAME = new SimpleStringProperty(username);
+		this.setLASTNAME(lastname);
 		
-		this.FIRSTNAME = new SimpleStringProperty(firstname);
-		
-		this.LASTNAME = new SimpleStringProperty(lastname);
-		
-		this.BALANCE = new SimpleIntegerProperty(balance);
-		
-		System.out.print(getUSERNAME());
+		this.setBALANCE(balance);
+
 		
 	}
 
-	public StringProperty getUSERNAME() {
-		return USERNAME;
-	}
 
-	public StringProperty getFIRSTNAME() {
-		return FIRSTNAME;
+	public String getUSERNAME() {
+		return USERNAME.get();
 	}
 	
-	public StringProperty getLASTNAME() {
-		return LASTNAME;
+	public void setUSERNAME(String uSERNAME) {
+		USERNAME.set(uSERNAME);
+	}
+/////////////////////////////////////////
+	public String getFIRSTNAME() {
+		return FIRSTNAME.get();
+	}
+	
+
+	public void setFIRSTNAME(String fIRSTNAME) {
+		FIRSTNAME.set(fIRSTNAME);
+	}
+/////////////////////////////////////////
+	public String getLASTNAME() {
+		return LASTNAME.get();
 	}
 
-	public IntegerProperty getBALANCE() {
-		return BALANCE;
+	public void setLASTNAME(String lASTNAME) {
+		LASTNAME.set(lASTNAME);
 	}
+
+////////////////////////////////////////////////
+	public Integer getBALANCE() {
+		return BALANCE.get();
+	}
+
+	public void setBALANCE(Integer bALANCE) {
+		BALANCE.set(bALANCE);
+	}
+
 
 
 
