@@ -21,6 +21,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 public class storeController implements Initializable {
+
 	
 	@FXML
 	private Button searchbutton;
@@ -64,6 +65,9 @@ public class storeController implements Initializable {
 	private void searchItem(ActionEvent event)throws SQLException  {
 		
 		String opt = ((Categories)this.category.getValue()).toString();
+		String searched = this.search.getText();
+		
+		System.out.println(searched);
 		
 		try {
 			
@@ -75,14 +79,35 @@ public class storeController implements Initializable {
 			
 			while(rs.next()) {
 				
-				String storage = rs.getString(4);
+				if(searched.equals("")) {
 				
-				if((storage).toUpperCase().equals(opt)) {
-				
-					this.Inf.add(new itemInf(rs.getString(1),rs.getString(2),rs.getInt(3), storage));
+					String storage = rs.getString(4); //stores the item category for comparison
+					
+					
+					if((storage).toUpperCase().equals(opt)) {
+					
+						this.Inf.add(new itemInf(rs.getString(1),rs.getString(2),rs.getInt(3), storage));
+					}
+					else if(opt.equals("ALL")) {
+						this.Inf.add(new itemInf(rs.getString(1),rs.getString(2),rs.getInt(3), storage));
+					}
 				}
-				else if(opt.equals("ALL")) {
-					this.Inf.add(new itemInf(rs.getString(1),rs.getString(2),rs.getInt(3), storage));
+				else {
+					
+					String storageitem = rs.getString(1); //stores the itemname for comparison
+					
+					String storageopt = rs.getString(4);
+					
+					System.out.println(storageitem.toUpperCase().contains(searched.toUpperCase()));
+					
+					if(storageitem.toUpperCase().contains(searched.toUpperCase()) && storageopt.toUpperCase().equals(opt)) {
+						this.Inf.add(new itemInf(storageitem, rs.getString(2),rs.getInt(3), storageopt));
+					}
+					
+					else if(storageitem.toUpperCase().contains(searched.toUpperCase()) && opt.toUpperCase().equals("ALL")) {
+						this.Inf.add(new itemInf(storageitem, rs.getString(2),rs.getInt(3),storageopt));
+					}
+
 				}
 			}
 
