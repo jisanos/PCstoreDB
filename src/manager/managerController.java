@@ -61,9 +61,7 @@ public class managerController implements Initializable{
 			
 			while(rs.next()) {
 				this.inf.add(new userInf(rs.getString(1), rs.getString(3), rs.getString(4), rs.getInt(5)));
-				
-				
-				
+
 			}
 			
 		}

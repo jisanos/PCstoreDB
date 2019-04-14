@@ -1,7 +1,7 @@
 package store;
 
 public enum Categories {
-	KEYBOARD, MOUSE, MONITOR, GPU, CPU, MOBO, RAM, CASE, COOLER, FAN;
+	ALL, KEYBOARD, MOUSE, MONITOR, GPU, CPU, MOBO, RAM, CASE, COOLER, FAN;
 	
 	private Categories() {
 		
