@@ -18,6 +18,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 
 public class storeController implements Initializable {
 	
@@ -73,16 +74,37 @@ public class storeController implements Initializable {
 			ResultSet rs = connection.createStatement().executeQuery(sql);
 			
 			while(rs.next()) {
-				this.Inf.add(new itemInf(rs.getString(1),rs.getString(2),rs.getInt(3), rs.getString(4)));
+				
+				String storage = rs.getString(4);
+				
+				if((storage).toUpperCase().equals(opt)) {
+				
+					this.Inf.add(new itemInf(rs.getString(1),rs.getString(2),rs.getInt(3), storage));
+				}
+				else if(opt.equals("ALL")) {
+					this.Inf.add(new itemInf(rs.getString(1),rs.getString(2),rs.getInt(3), storage));
+				}
 			}
 
 		}catch(SQLException cls) {
 			System.err.println("error "+cls);
 		}
+		this.itemname.setCellValueFactory(new PropertyValueFactory<itemInf, String>("NAME"));
 		
+		this.specs.setCellValueFactory(new PropertyValueFactory<itemInf, String>("SPECS"));
+
+		this.price.setCellValueFactory(new PropertyValueFactory<itemInf, Integer>("PRICE"));
+		
+		this.categorycol.setCellValueFactory(new PropertyValueFactory<itemInf, String>("CATEGORY"));
+		
+		this.storetable.setItems(null);
+		
+		this.storetable.setItems(this.Inf);
 		
 		
 	}
+	
+
 	
 	
 	
