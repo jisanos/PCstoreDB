@@ -20,7 +20,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import manager.managerController;
-import user.userController;
+import store.storeController;
 
 public class LoginController implements Initializable{
 	
@@ -123,9 +123,9 @@ public class LoginController implements Initializable{
 			
 			FXMLLoader loader = new FXMLLoader();
 			
-			Pane root = (Pane) loader.load(getClass().getResource("/user/user.fxml").openStream());
+			Pane root = (Pane) loader.load(getClass().getResource("/store/user.fxml").openStream());
 			
-			userController usrCtrl = (userController)loader.getController();
+			storeController usrCtrl = (storeController)loader.getController();
 			
 			Scene scene = new Scene(root);
 			
