@@ -25,28 +25,28 @@ public class storeController implements Initializable {
 
 	//these represent each of the elements of the UI when inside the store tab
 	
-	private int userBalance;
+	private int userBalance; //stores the balance of the user
 	
 	@FXML
-	private Text notifier;
+	private Text notifier; //text under the ID box notifying the user of the purchase
 	
 	@FXML
-	private Text balance;
+	private Text balance; //shows the user his balance
 	
 	@FXML
-	private Button searchbutton;
+	private Button searchbutton; 
 	
 	@FXML
-	private TextField search;
+	private TextField search; //field user enters to search
 	
 	@FXML
-	private ComboBox<Categories> category;
+	private ComboBox<Categories> category; //dropbox with item categories
 	
 	@FXML
-	private TableView<itemInf> storetable;
+	private TableView<itemInf> storetable; //the table of contents
 	
 	@FXML
-	private TableColumn<itemInf, String> itemname;
+	private TableColumn<itemInf, String> itemname; 
 	
 	@FXML
 	private TableColumn<itemInf, String> specs;
@@ -64,10 +64,10 @@ public class storeController implements Initializable {
 	private TableColumn<itemInf, Integer> idcol;
 	
 	@FXML
-	private TextField idbox;
+	private TextField idbox; //where user enters ID of purchase
 	
 	@FXML
-	private Button buy;
+	private Button buy; 
 	
 	private ConnectDB connect;
 	
@@ -83,8 +83,6 @@ public class storeController implements Initializable {
 		this.category.setItems(FXCollections.observableArrayList(Categories.values()));
 		
 		getBalance(LoginController.getUsername());
-		
-		this.balance.setText(Integer.toString(userBalance) + " $");
 
 	}
 	
@@ -98,14 +96,12 @@ public class storeController implements Initializable {
 			ps.setString(1, LoginController.getUsername());
 			
 			ResultSet rs = ps.executeQuery();
-			
-			if(rs.next()){
-				
-				this.userBalance = rs.getInt(5);
 	
-			}
-			else
-				System.err.print("Balance not found");
+			this.userBalance = rs.getInt(5);
+			
+			this.balance.setText(Integer.toString(userBalance) + " $");
+			
+			
 
 			connection.close();
 			
@@ -116,16 +112,20 @@ public class storeController implements Initializable {
 		
 	}
 	
-	private void setBalance(int cost) {
+	private void setBalance(int cost) throws SQLException{
 		
 		try {
+			
+			int reduction = this.userBalance - cost;
+			
 			Connection connection = ConnectDB.getConnection();
 			
 			PreparedStatement ps = connection.prepareStatement("UPDATE users SET balance = ? WHERE username = ?");
 			
-			ps.setInt(1, ());
+			ps.setInt(1, reduction);
 			ps.setString(2, LoginController.getUsername());
 			
+			ps.execute();
 
 			connection.close();
 			
@@ -215,43 +215,49 @@ public class storeController implements Initializable {
 		try {
 			Connection connection = ConnectDB.getConnection();
 			
-			ResultSet rs = connection.createStatement().executeQuery(sql); //SELECT * FROM items
+			PreparedStatement ps1 = connection.prepareStatement("SELECT * FROM items where ID = ?");
 			
+			ps1.setInt(1, id);
 			
-			while(rs.next()) {
+			ResultSet rs = ps1.executeQuery(); //SELECT * FROM items
+			
+				int storestock = rs.getInt(5); //gets the stock of the item and stores it
+				int pricers = rs.getInt(3); ///gets item price
+				ps1.close();
 				
-				int store = rs.getInt(5); //gets the stock of the item and stores it
+				System.out.print(pricers);
 				
-				int storeid = rs.getInt(6); //gets the id of the item and stores it
-				
-				//compares the user entered id with 
-				if( storeid == id && store > 0) {
+				//checks if theres stock
+				if(storestock > 0 && pricers <= this.userBalance) {
 					
-					store -= 1;
+					storestock -= 1;
 						
 					PreparedStatement ps = connection.prepareStatement("UPDATE items SET inventory = ? WHERE ID = ?");
 						
-					ps.setInt(1, store);
+					ps.setInt(1, storestock);
 					ps.setInt(2, id);
 						
 					ps.execute();
 					
-					notifier.setText("Purchased Succesfully");
+					connection.close();
 					
-					setBalance(this.userBalance);
-											
-					break;
+					setBalance(pricers);
+					getBalance(LoginController.getUsername());
+					
+					notifier.setText("Purchased Succesfully");
 
 				}
-				else if(storeid == id && store == 0) {
+				else if(storestock == 0) {
 					
 					notifier.setText("Out of Stock");			
 				}
-				
+				else if(pricers > this.userBalance) {
+					notifier.setText("Not enough cash");	
+				}
+				connection.close();
 			}
-			connection.close();
 			
-		}catch(SQLException cls) {
+			catch(SQLException cls) {
 			System.err.print(cls);
 		}
 		
@@ -260,3 +266,4 @@ public class storeController implements Initializable {
 	}
 	
 }
+
