@@ -18,6 +18,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import manager.managerController;
 import store.storeController;
@@ -25,6 +26,8 @@ import store.storeController;
 public class LoginController implements Initializable{
 	
 	Model logModel = new Model();
+	
+	private static String usernameString;
 	
 	@FXML
 	private Label status;
@@ -39,6 +42,12 @@ public class LoginController implements Initializable{
 	@FXML
 	private Label attempt;
 	
+	public static String getUsername() {
+		return usernameString;
+	}
+	private void setUsername(String n) {
+		this.usernameString = n;
+	}
 	
 	public void initialize(URL link, ResourceBundle rb) {
 		if(this.logModel.checkConnection()) {  //unsure
@@ -118,6 +127,8 @@ public class LoginController implements Initializable{
 	
 	public void userLog() {
 		
+		setUsername(username.getText());
+		
 		try {
 			Stage usrStage = new Stage();
 			
@@ -130,13 +141,13 @@ public class LoginController implements Initializable{
 			Scene scene = new Scene(root);
 			
 			usrStage.setScene(scene);
-			
+
 			usrStage.setTitle("User");
 			
 			usrStage.setResizable(false);
 			
 			usrStage.show();
-			
+						
 			
 		}
 		catch(IOException cls)
