@@ -78,11 +78,11 @@ public class storeController implements Initializable {
 	
 	public void initialize(URL url, ResourceBundle rb) {
 		
-		this.connect = new ConnectDB();
+		this.connect = new ConnectDB(); //new connection to the database
 		
-		this.category.setItems(FXCollections.observableArrayList(Categories.values()));
+		this.category.setItems(FXCollections.observableArrayList(Categories.values()));//adds the data to the selection dropbox from the Categories.java enum
 		
-		getBalance(LoginController.getUsername());
+		getBalance(LoginController.getUsername());//gets the balance of the user and displays it
 
 	}
 	
@@ -91,22 +91,23 @@ public class storeController implements Initializable {
 		try {
 			Connection connection = ConnectDB.getConnection();
 			
-			PreparedStatement ps = connection.prepareStatement("SELECT * FROM users WHERE username = ?");
+			PreparedStatement ps = connection.prepareStatement("SELECT * FROM users WHERE username = ?"); //selection statement
 			
-			ps.setString(1, LoginController.getUsername());
+			ps.setString(1, LoginController.getUsername()); //sets = ?
 			
 			ResultSet rs = ps.executeQuery();
 	
-			this.userBalance = rs.getInt(5);
+			this.userBalance = rs.getInt(5); //gets the balance from the users database
 			
-			this.balance.setText(Integer.toString(userBalance) + " $");
+			this.balance.setText(Integer.toString(userBalance) + " $"); //displays on the balance textbox (IU)
 			
 			
-
+			ps.close();
+			rs.close();
 			connection.close();
 			
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+		
 			e.printStackTrace();
 		}
 		
@@ -116,21 +117,23 @@ public class storeController implements Initializable {
 		
 		try {
 			
-			int reduction = this.userBalance - cost;
+			int reduction = this.userBalance - cost; //calculates the new user balance
 			
 			Connection connection = ConnectDB.getConnection();
 			
-			PreparedStatement ps = connection.prepareStatement("UPDATE users SET balance = ? WHERE username = ?");
+			PreparedStatement ps = connection.prepareStatement("UPDATE users SET balance = ? WHERE username = ?"); //uptade statement for the balance
 			
-			ps.setInt(1, reduction);
+			
+			ps.setInt(1, reduction);//adds the new balance value to the users database
 			ps.setString(2, LoginController.getUsername());
 			
 			ps.execute();
-
+			
+			ps.close();
 			connection.close();
 			
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+		
 			e.printStackTrace();
 		}
 		
@@ -182,6 +185,8 @@ public class storeController implements Initializable {
 					}
 				}
 			}
+			rs.close();
+			connection.close();
 
 		}catch(SQLException cls) {
 			
@@ -215,17 +220,22 @@ public class storeController implements Initializable {
 		try {
 			Connection connection = ConnectDB.getConnection();
 			
-			PreparedStatement ps1 = connection.prepareStatement("SELECT * FROM items where ID = ?");
+			PreparedStatement ps1 = connection.prepareStatement("SELECT * FROM items where ID = ?"); //searches for the item in the database via its id
 			
+			//add the user entered id
 			ps1.setInt(1, id);
 			
 			ResultSet rs = ps1.executeQuery(); //SELECT * FROM items
 			
+				if(!rs.next()) {
+					notifier.setText("Invalid ID");
+					return;
+				}
+			
 				int storestock = rs.getInt(5); //gets the stock of the item and stores it
 				int pricers = rs.getInt(3); ///gets item price
 				ps1.close();
-				
-				System.out.print(pricers);
+
 				
 				//checks if theres stock
 				if(storestock > 0 && pricers <= this.userBalance) {
@@ -239,7 +249,11 @@ public class storeController implements Initializable {
 						
 					ps.execute();
 					
+					ps1.close();
+					ps.close();
+					rs.close();
 					connection.close();
+					
 					
 					setBalance(pricers);
 					getBalance(LoginController.getUsername());
@@ -254,6 +268,10 @@ public class storeController implements Initializable {
 				else if(pricers > this.userBalance) {
 					notifier.setText("Not enough cash");	
 				}
+
+				
+				ps1.close();
+				rs.close();
 				connection.close();
 			}
 			
