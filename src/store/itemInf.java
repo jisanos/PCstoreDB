@@ -15,7 +15,11 @@ public class itemInf {
 	
 	private StringProperty CATEGORY= new SimpleStringProperty();
 	
-	public itemInf(String name, String specs, Integer price, String category) {
+	private IntegerProperty STOCK = new SimpleIntegerProperty();
+	
+	private IntegerProperty ID = new SimpleIntegerProperty();
+	
+	public itemInf(String name, String specs, Integer price, String category, Integer stock, Integer id) {
 		
 		this.setNAME(name);
 		
@@ -24,6 +28,10 @@ public class itemInf {
 		this.setPRICE(price);
 		
 		this.setCATEGORY(category);
+		
+		this.setSTOCK(stock);
+		
+		this.setID(id);
 		
 	}
 
@@ -34,7 +42,7 @@ public class itemInf {
 	public void setNAME(String nAME) {
 		NAME.set(nAME);
 	}
-
+//////////////////////////////////////////
 	public String getSPECS() {
 		return SPECS.get();
 	}
@@ -42,7 +50,7 @@ public class itemInf {
 	public void setSPECS(String sPECS) {
 		SPECS.set(sPECS);
 	}
-
+///////////////////////////////////////
 	public Integer getPRICE() {
 		return PRICE.get();
 	}
@@ -50,7 +58,7 @@ public class itemInf {
 	public void setPRICE(Integer pRICE) {
 		PRICE.set(pRICE);
 	}
-
+/////////////////////////////////////
 	public String getCATEGORY() {
 		return CATEGORY.get();
 	}
@@ -58,6 +66,22 @@ public class itemInf {
 	public void setCATEGORY(String cATEGORY) {
 		CATEGORY.set(cATEGORY);
 	}
-	
+////////////////////////////////////////
+	public Integer getSTOCK() {
+		return STOCK.get();
+	}
+
+	public void setSTOCK(Integer sTOCK) {
+		STOCK.set(sTOCK);
+	}
+	////////////////////////////////////////
+
+	public Integer getID() {
+		return ID.get();
+	}
+
+	public void setID(Integer iD) {
+		ID.set(iD);
+	}
 
 }
