@@ -18,12 +18,12 @@
                            <children>
                               <TableView fx:id="storetable" prefHeight="498.0" prefWidth="724.0">
                                  <columns>
-                                    <TableColumn fx:id="itemname" prefWidth="132.0" text="Item Name" />
-                                    <TableColumn fx:id="specs" prefWidth="288.0" text="Specs" />
-                                    <TableColumn fx:id="price" prefWidth="59.0" text="Price" />
-                                    <TableColumn fx:id="categorycol" prefWidth="79.0" text="Category" />
-                                    <TableColumn fx:id="stock" prefWidth="54.0" text="Stock" />
-                                    <TableColumn fx:id="idcol" prefWidth="111.0" text="ID" />
+                                    <TableColumn fx:id="itemname" prefWidth="188.0" text="Item Name" />
+                                    <TableColumn fx:id="specs" prefWidth="319.0" text="Specs" />
+                                    <TableColumn fx:id="price" prefWidth="43.0" text="Price" />
+                                    <TableColumn fx:id="categorycol" prefWidth="73.0" text="Category" />
+                                    <TableColumn fx:id="stock" prefWidth="53.0" text="Stock" />
+                                    <TableColumn fx:id="idcol" prefWidth="47.0" text="ID" />
                                  </columns>
                               </TableView>
                            </children>
@@ -68,7 +68,10 @@
                                  <VBox.margin>
                                     <Insets top="3.0" />
                                  </VBox.margin></Text>
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Balance:" wrappingWidth="63.7294921875" />
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Balance:" wrappingWidth="63.7294921875">
+                                 <VBox.margin>
+                                    <Insets left="10.0" />
+                                 </VBox.margin></Text>
                               <Text fx:id="balance" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="175.7294921875" />
                            </children>
                         </VBox>
