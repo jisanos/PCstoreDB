@@ -22,7 +22,7 @@ public class Model {
 	
 		if(this.connection == null)
 		{
-			System.exit(1);
+			System.exit(1); //exit if no connection
 		}
 	}
 	
@@ -37,7 +37,7 @@ public class Model {
 		String sql = null;
 		
 		try {
-		
+		//Changes the sql script depending on the login choice
 		if(option.equals("MANAGER")) {
 			sql = "SELECT * FROM managers where username = ? and password = ?";
 						
@@ -48,16 +48,13 @@ public class Model {
 		}
 		
 			ps = this.connection.prepareStatement(sql);
-			ps.setString(1, usr); //email
+			ps.setString(1, usr); //set the entered usernaem and password in the prepare statement
 			ps.setString(2, passwd);
 			
 			
-			rs = ps.executeQuery();
-			
-			boolean flag;
-			
-			
-			if(rs.next()) {
+			rs = ps.executeQuery(); //excecute the statement and sace in the resultset
+					
+			if(rs.next()) { //if the entered user name and password are found in the user database then return true value, else false
 				return true;
 			}
 			return false;

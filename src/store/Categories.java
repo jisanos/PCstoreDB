@@ -1,6 +1,9 @@
 package store;
 
 public enum Categories {
+	
+	//combobox within the users UI content
+	
 	ALL, KEYBOARD, MOUSE, MONITOR, GPU, CPU, MOBO, RAM, CASE, COOLER, FAN;
 	
 	private Categories() {

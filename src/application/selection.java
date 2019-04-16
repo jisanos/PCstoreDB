@@ -1,7 +1,7 @@
 package application;
 
 public enum selection {
-	
+	//the combobox values
 	MANAGER, USER;
 	
 	private selection() {
