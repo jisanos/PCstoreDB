@@ -7,6 +7,8 @@ import javafx.beans.property.StringProperty;
 
 public class itemInf {
 	
+	//all of the contends of the store table
+	
 	private StringProperty NAME = new SimpleStringProperty();
 	
 	private StringProperty SPECS = new SimpleStringProperty();

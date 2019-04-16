@@ -1,7 +1,5 @@
 package application;
 
-
-
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -91,15 +89,15 @@ public class LoginController implements Initializable{
 				this.attempt.setText("Login Failed");
 			}
 						
-		}
-		catch(Exception exception) {
-			
+		}catch(Exception exception) {
+		
+			System.err.print(exception);
 		}
 		
 		
 	}
 	
-	public void managerLog() { //method that activated the manager pane
+	public void managerLog() { //method that activates the manager pane
 		
 		try {
 		
@@ -127,8 +125,8 @@ public class LoginController implements Initializable{
 	
 	public void userLog() {
 		
-		setUsername(username.getText());
-		
+		setUsername(username.getText()); //set the username as a static private string for later use in the program (other packages)
+										
 		try {
 			Stage usrStage = new Stage();
 			

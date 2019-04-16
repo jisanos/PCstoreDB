@@ -5,13 +5,10 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class ConnectDB {
+		
+	private static final String sqliteConnection = "jdbc:sqlite:store.sqlite"; //query to connect to the sqlite database
 	
-	//private static final String userName = "user";
-	//private static final String passWord = "password";
-	//private static final String connection = "jdbc:mysql://localhost/login";
-	
-	private static final String sqliteConnection = "jdbc:sqlite:store.sqlite"; //constant string that connects to sqlite
-	
+	//method that Connects to the sqlite databse
 	public static Connection getConnection() throws SQLException {
 		
 		try {

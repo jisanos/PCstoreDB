@@ -29,43 +29,30 @@ public class storeController implements Initializable {
 	
 	@FXML
 	private Text notifier; //text under the ID box notifying the user of the purchase
-	
 	@FXML
 	private Text balance; //shows the user his balance
-	
 	@FXML
 	private Button searchbutton; 
-	
 	@FXML
 	private TextField search; //field user enters to search
-	
 	@FXML
 	private ComboBox<Categories> category; //dropbox with item categories
-	
 	@FXML
 	private TableView<itemInf> storetable; //the table of contents
-	
 	@FXML
 	private TableColumn<itemInf, String> itemname; 
-	
 	@FXML
 	private TableColumn<itemInf, String> specs;
-	
 	@FXML
 	private TableColumn<itemInf, Integer> price;
-	
 	@FXML
 	private TableColumn<itemInf, String> categorycol;
-	
 	@FXML
 	private TableColumn<itemInf, Integer> stock;
-	
 	@FXML
 	private TableColumn<itemInf, Integer> idcol;
-	
 	@FXML
 	private TextField idbox; //where user enters ID of purchase
-	
 	@FXML
 	private Button buy; 
 	

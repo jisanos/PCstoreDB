@@ -21,6 +21,8 @@ import javafx.scene.control.cell.PropertyValueFactory;
 
 public class managerController implements Initializable{
 	
+	//all of the GUI options in the manager pane
+	
 	@FXML
 	private TextField userremove;
 	
@@ -51,18 +53,17 @@ public class managerController implements Initializable{
 		
 	}
 	
+	//load button action event
 	@FXML
 	private void loadUserInf(ActionEvent event)throws SQLException{
 		try {
 			Connection connection = ConnectDB.getConnection();
 			this.inf = FXCollections.observableArrayList();
-			
+			//excecute the sql statement and save it in resultset
 			ResultSet rs = connection.createStatement().executeQuery(sql);
 			
 			while(rs.next()) {
-				
-				
-				
+					//get all of the data int the result set (obtained from the database) and sava it in the inf observable list
 				this.inf.add(new userInf(rs.getString(1), rs.getString(3), rs.getString(4), rs.getInt(5)));
 
 			}
@@ -71,6 +72,8 @@ public class managerController implements Initializable{
 		catch(SQLException cls) {
 			System.err.println("Error "+cls);
 		}
+		
+		//place all the data saved in the observable list into their respective columns in the GUI
 		
 		this.usercolumn.setCellValueFactory(new PropertyValueFactory<userInf, String>("USERNAME"));
 		
@@ -85,20 +88,21 @@ public class managerController implements Initializable{
 		this.usertable.setItems(this.inf);
 	}
 	
+	//action event for the remove user button in the GUI
 	@FXML
 	private void removeUser(ActionEvent event) throws SQLException {
-		String deleteSql = "DELETE FROM users WHERE username = ?";
+		String deleteSql = "DELETE FROM users WHERE username = ?"; //delete from the users table where the username is equal to
 		
 		try {
 			Connection connection = ConnectDB.getConnection();
 			
-			PreparedStatement ps = connection.prepareStatement(deleteSql);
+			PreparedStatement ps = connection.prepareStatement(deleteSql); 
 			
-			ps.setString(1, this.userremove.getText());
+			ps.setString(1, this.userremove.getText());//finish the script by inserting the entered string
 			
-			ps.execute();
+			ps.execute(); //esxcecute query
 			
-			connection.close();
+			connection.close(); 
 			
 			
 		}catch(SQLException cls) {
