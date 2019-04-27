@@ -21,7 +21,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.text.Text;
 
-public class storeController implements Initializable {
+public class storeController extends myAccountController implements Initializable {
 
 	//these represent each of the elements of the UI when inside the store tab
 	
@@ -70,7 +70,8 @@ public class storeController implements Initializable {
 		this.category.setItems(FXCollections.observableArrayList(Categories.values()));//adds the data to the selection dropbox from the Categories.java enum
 		
 		getBalance(LoginController.getUsername());//gets the balance of the user and displays it
-
+		
+		getUserInfo();
 	}
 	
 	private void getBalance(String n) {
@@ -139,7 +140,7 @@ public class storeController implements Initializable {
 			
 			this.Inf = FXCollections.observableArrayList(); 
 			
-			ResultSet rs = connection.createStatement().executeQuery(sql); //excecutes the sql que
+			ResultSet rs = connection.createStatement().executeQuery(sql); //"SELECT * FROM items"
 			
 			while(rs.next()) {
 				

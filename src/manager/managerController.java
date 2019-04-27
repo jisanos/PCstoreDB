@@ -41,6 +41,9 @@ public class managerController implements Initializable{
 	@FXML
 	private TableColumn<userInf, Integer> balancecolumn;
 	
+	@FXML
+	private TableColumn<userInf, String> addresscolumn;
+	
 	private ConnectDB connect;
 	
 	private ObservableList<userInf> inf;
@@ -60,11 +63,11 @@ public class managerController implements Initializable{
 			Connection connection = ConnectDB.getConnection();
 			this.inf = FXCollections.observableArrayList();
 			//excecute the sql statement and save it in resultset
-			ResultSet rs = connection.createStatement().executeQuery(sql);
+			ResultSet rs = connection.createStatement().executeQuery(sql); //"SELECT * FROM users"
 			
 			while(rs.next()) {
 					//get all of the data int the result set (obtained from the database) and sava it in the inf observable list
-				this.inf.add(new userInf(rs.getString(1), rs.getString(3), rs.getString(4), rs.getInt(5)));
+				this.inf.add(new userInf(rs.getString(1), rs.getString(3), rs.getString(4), rs.getInt(5), rs.getString(6)));
 
 			}
 			
@@ -83,6 +86,8 @@ public class managerController implements Initializable{
 		
 		this.balancecolumn.setCellValueFactory(new PropertyValueFactory<userInf, Integer>("BALANCE"));
 		
+		this.addresscolumn.setCellValueFactory(new PropertyValueFactory<userInf, String>("ADDRESS"));
+		
 		this.usertable.setItems(null);
 		
 		this.usertable.setItems(this.inf);
@@ -100,7 +105,7 @@ public class managerController implements Initializable{
 			
 			ps.setString(1, this.userremove.getText());//finish the script by inserting the entered string
 			
-			ps.execute(); //esxcecute query
+			ps.execute(); //excecute query
 			
 			connection.close(); 
 			
