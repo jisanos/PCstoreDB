@@ -16,7 +16,10 @@ public class userInf {
 	
 	private IntegerProperty BALANCE = new SimpleIntegerProperty();
 	
-	public userInf(String username, String firstname, String lastname, Integer balance)
+	private StringProperty ADDRESS = new SimpleStringProperty();
+
+	
+	public userInf(String username, String firstname, String lastname, Integer balance, String address)
 	{
 
 		this.setUSERNAME(username);
@@ -26,11 +29,20 @@ public class userInf {
 		this.setLASTNAME(lastname);
 		
 		this.setBALANCE(balance);
-
 		
+		this.setADDRESS(address);
+
 	}
 
-
+	public String getADDRESS() {
+		return ADDRESS.get();
+	}
+	
+	public void setADDRESS(String aDDRESS) {
+		ADDRESS.set(aDDRESS);
+	}
+	
+/////////////////////////////////////////////
 	public String getUSERNAME() {
 		return USERNAME.get();
 	}
