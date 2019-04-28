@@ -302,6 +302,12 @@ public class storeController implements Initializable {
 	private PasswordField pass2;
 	@FXML
 	private TextField newfirstname;
+	@FXML
+	private TextField newlastname;
+	@FXML
+	private TextField addbalance;
+	@FXML
+	private TextField newaddress;
 
 	
 	public void getUserInfo() throws SQLException{
@@ -414,6 +420,93 @@ public class storeController implements Initializable {
 			ps.execute();
 			
 			successfullchange.setText("Successfully Changed Firstname!");
+				
+			ps.close();
+			connection.close();
+			
+			
+		} catch (SQLException e) {
+		
+			e.printStackTrace();
+		}
+		
+	}
+	
+	@FXML
+	private void changeLastName(ActionEvent event)throws SQLException {
+		
+		try {
+			Connection connection = ConnectDB.getConnection();
+			
+			PreparedStatement ps = connection.prepareStatement("UPDATE users SET lastname = ? WHERE username = ?"); //selection statement
+			
+			ps.setString(1, newlastname.getText());
+			
+			ps.setString(2, LoginController.getUsername()); //sets = ?
+			
+			ps.execute();
+			
+			successfullchange.setText("Successfully Changed Lastname!");
+				
+			ps.close();
+			connection.close();
+			
+			
+		} catch (SQLException e) {
+		
+			e.printStackTrace();
+		}
+		
+	}
+	
+	@FXML
+	private void addMoreBalance(ActionEvent event)throws SQLException{
+		getBalance(LoginController.getUsername());
+		
+		int newBal = (Integer.parseInt(addbalance.getText()) + this.userBalance);
+		
+		try {
+			Connection connection = ConnectDB.getConnection();
+			
+			PreparedStatement ps = connection.prepareStatement("UPDATE users SET balance = ? WHERE username = ?"); //selection statement
+			
+			ps.setInt(1, newBal);
+			
+			ps.setString(2, LoginController.getUsername()); //sets = ?
+			
+			ps.execute();
+			
+			successfullchange.setText("Successfully Added Curency!");
+			
+				
+			ps.close();
+			connection.close();
+			
+			
+		} catch (SQLException e) {
+		
+			e.printStackTrace();
+		}
+		getBalance(LoginController.getUsername());
+
+		
+	}
+	
+	@FXML
+	private void changeAdrress(ActionEvent event)throws SQLException{
+		
+		try {
+			Connection connection = ConnectDB.getConnection();
+			
+			PreparedStatement ps = connection.prepareStatement("UPDATE users SET address = ? WHERE username = ?"); //selection statement
+			
+			ps.setString(1, newaddress.getText());
+			
+			ps.setString(2, LoginController.getUsername()); //sets = ?
+			
+			ps.execute();
+			
+			successfullchange.setText("Successfully Changed Address!");
 				
 			ps.close();
 			connection.close();
