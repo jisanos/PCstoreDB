@@ -43,8 +43,8 @@ public class LoginController implements Initializable{
 	public static String getUsername() {
 		return usernameString;
 	}
-	private void setUsername(String n) {
-		this.usernameString = n;
+	public static void setUsername(String n) {
+		usernameString = n;
 	}
 	
 	public void initialize(URL link, ResourceBundle rb) {

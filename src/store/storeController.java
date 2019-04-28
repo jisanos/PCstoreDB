@@ -15,13 +15,16 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.text.Text;
 
-public class storeController extends myAccountController implements Initializable {
+public class storeController implements Initializable {
+	
 
 	//these represent each of the elements of the UI when inside the store tab
 	
@@ -71,7 +74,13 @@ public class storeController extends myAccountController implements Initializabl
 		
 		getBalance(LoginController.getUsername());//gets the balance of the user and displays it
 		
-		getUserInfo();
+		try {
+			getUserInfo();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 	}
 	
 	private void getBalance(String n) {
@@ -269,6 +278,162 @@ public class storeController extends myAccountController implements Initializabl
 		
 		
 		
+	}
+	
+	@FXML
+	private Label usernamelabel;
+	@FXML
+	private Label passwordlabel;
+	@FXML
+	private Label firstnamelabel;
+	@FXML
+	private Label lastnamelabel;
+	@FXML
+	private Label balancelabel;
+	@FXML
+	private Label addresslabel;
+	@FXML
+	private TextField newusername;
+	@FXML
+	private Label successfullchange;
+	@FXML
+	private PasswordField pass1;
+	@FXML
+	private PasswordField pass2;
+	@FXML
+	private TextField newfirstname;
+
+	
+	public void getUserInfo() throws SQLException{
+		
+		try {
+			Connection connection = ConnectDB.getConnection();
+			
+			PreparedStatement ps = connection.prepareStatement("SELECT * FROM users WHERE username = ?"); //selection statement
+			
+			ps.setString(1, LoginController.getUsername()); //sets = ?
+			
+			ResultSet rs = ps.executeQuery();
+	
+			this.usernamelabel.setText(rs.getString(1));
+			
+			this.passwordlabel.setText(rs.getString(2));
+			
+			this.firstnamelabel.setText(rs.getString(3));
+			
+			this.lastnamelabel.setText(rs.getString(4));
+			
+			this.balancelabel.setText(Integer.toString(rs.getInt(5)) + " $");
+			
+			this.addresslabel.setText(rs.getString(6));
+			
+			ps.close();
+			rs.close();
+			connection.close();
+			
+		} catch (SQLException e) {
+		
+			e.printStackTrace();
+		}
+		
+	}
+	
+	@FXML
+	private void changeUsername(ActionEvent event)throws SQLException {
+		
+		try {
+			Connection connection = ConnectDB.getConnection();
+			
+			PreparedStatement ps = connection.prepareStatement("UPDATE users SET username = ? WHERE username = ?"); //selection statement
+			
+			ps.setString(1, newusername.getText());
+			
+			ps.setString(2, LoginController.getUsername()); //sets = ?
+			
+			ps.execute();
+			
+			successfullchange.setText("Successfully Changed Username!");
+				
+			LoginController.setUsername(newusername.getText());
+				
+			ps.close();
+			connection.close();
+			
+			
+		} catch (SQLException e) {
+		
+			e.printStackTrace();
+		}
+		
+	}
+	@FXML
+	private void changePassword(ActionEvent event) throws SQLException {
+	
+		if(pass1.getText().equals(pass2.getText())) {
+		
+				try {
+					Connection connection = ConnectDB.getConnection();
+					
+					PreparedStatement ps = connection.prepareStatement("UPDATE users SET password = ? WHERE username = ?"); //selection statement
+					
+					ps.setString(1, pass1.getText());
+					
+					ps.setString(2, LoginController.getUsername()); //sets = ?
+					
+					ps.execute();
+					
+					successfullchange.setText("Successfully Changed Password!");
+												
+					ps.close();
+					connection.close();
+					
+					
+				} catch (SQLException e) {
+				
+					e.printStackTrace();
+				}
+			}
+		else
+		{
+			successfullchange.setText("Passwords do not match");
+		}
+	}
+	
+	@FXML
+	private void changeFirstname(ActionEvent event) throws SQLException{
+		
+		try {
+			Connection connection = ConnectDB.getConnection();
+			
+			PreparedStatement ps = connection.prepareStatement("UPDATE users SET firstname = ? WHERE username = ?"); //selection statement
+			
+			ps.setString(1, newfirstname.getText());
+			
+			ps.setString(2, LoginController.getUsername()); //sets = ?
+			
+			ps.execute();
+			
+			successfullchange.setText("Successfully Changed Firstname!");
+				
+			ps.close();
+			connection.close();
+			
+			
+		} catch (SQLException e) {
+		
+			e.printStackTrace();
+		}
+		
+	}
+	
+	@FXML
+	private void refresh(ActionEvent event){
+			try {
+				getUserInfo();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 	}
 	
 }
