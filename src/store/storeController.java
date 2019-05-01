@@ -30,6 +30,8 @@ public class storeController implements Initializable {
 	
 	private int userBalance; //stores the balance of the user
 	
+	private int userID;
+	
 	@FXML
 	private Text notifier; //text under the ID box notifying the user of the purchase
 	@FXML
@@ -74,10 +76,35 @@ public class storeController implements Initializable {
 		
 		getBalance(LoginController.getUsername());//gets the balance of the user and displays it
 		
+		getUserID();
+		
 		try {
 			getUserInfo();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+	private void getUserID() {
+		
+		try {
+			Connection connection = ConnectDB.getConnection();
+			
+			PreparedStatement ps = connection.prepareStatement("SELECT * FROM users WHERE username = ?"); //selection statement
+			
+			ps.setString(1, LoginController.getUsername()); //sets = ?
+			
+			ResultSet rs = ps.executeQuery();
+	
+			this.userID = rs.getInt(7); //gets the ID from the user table
+			
+			ps.close();
+			rs.close();
+			connection.close();
+			
+		} catch (SQLException e) {
+		
 			e.printStackTrace();
 		}
 		
@@ -246,6 +273,15 @@ public class storeController implements Initializable {
 						
 					ps.execute();
 					
+					PreparedStatement ps2 = connection.prepareStatement("INSERT INTO purchased(userid,itemid,quantity) VALUES(?,?,?)");
+							
+					ps2.setInt(1, this.userID);		
+					ps2.setInt(2, id);
+					ps2.setInt(3, 1);
+					
+					ps2.execute();
+					
+					ps2.close();
 					ps1.close();
 					ps.close();
 					rs.close();
@@ -528,6 +564,8 @@ public class storeController implements Initializable {
 				e.printStackTrace();
 			}
 	}
+	
+		
 	
 }
 
