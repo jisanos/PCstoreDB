@@ -268,20 +268,58 @@ public class storeController implements Initializable {
 						
 					PreparedStatement ps = connection.prepareStatement("UPDATE items SET inventory = ? WHERE ID = ?");
 						
+					
 					ps.setInt(1, storestock);
 					ps.setInt(2, id);
 						
 					ps.execute();
 					
-					PreparedStatement ps2 = connection.prepareStatement("INSERT INTO purchased(userid,itemid,quantity) VALUES(?,?,?)");
-							
-					ps2.setInt(1, this.userID);		
-					ps2.setInt(2, id);
-					ps2.setInt(3, 1);
+					//
 					
-					ps2.execute();
+					PreparedStatement psVer = connection.prepareStatement("SELECT * FROM purchased WHERE userid = ? AND itemid = ?"); //Checks if a row with the same user id and same item ID already exists
 					
-					ps2.close();
+					psVer.setInt(1, this.userID);
+					psVer.setInt(2, id);
+					
+					ResultSet rsVer = psVer.executeQuery();
+					
+					//if the row already exists in the purchased table, it will only modify it.
+					
+					if(rsVer.next()) {
+						
+						int quantity = rsVer.getInt(3);
+						
+						quantity +=1;
+						
+						PreparedStatement ps2 = connection.prepareStatement("UPDATE purchased SET quantity = ? WHERE userid = ? AND itemid = ?"); //insert the item bought into the purchased database
+						
+						ps2.setInt(1, quantity);		
+						ps2.setInt(2, this.userID);
+						ps2.setInt(3, id);
+						
+						ps2.execute();
+						
+						ps2.close();
+						rsVer.close();
+						
+						
+					}
+					
+					//if the row does not exist in the purchased table, it will insert a new row with its contents
+					else {
+						PreparedStatement ps2 = connection.prepareStatement("INSERT INTO purchased(userid,itemid,quantity) VALUES(?,?,?)"); //insert the item bought into the purchased database
+								
+						ps2.setInt(1, this.userID);		
+						ps2.setInt(2, id);
+						ps2.setInt(3, 1);
+						
+						ps2.execute();
+						
+						ps2.close();
+						rsVer.close();
+					}
+					
+					//
 					ps1.close();
 					ps.close();
 					rs.close();
