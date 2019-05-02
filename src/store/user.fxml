@@ -119,9 +119,9 @@
                      <children>
                         <AnchorPane prefHeight="500.0" prefWidth="728.0">
                            <children>
-                              <TableView prefHeight="500.0" prefWidth="816.0">
+                              <TableView fx:id="purchasedtable" prefHeight="500.0" prefWidth="816.0">
                                 <columns>
-                                  <TableColumn fx:id="pirchaseditemname" prefWidth="173.0" text="Item Name" />
+                                  <TableColumn fx:id="purchaseditemname" prefWidth="173.0" text="Item Name" />
                                   <TableColumn fx:id="purchaseditemdescription" prefWidth="525.0" text="Description" />
                                     <TableColumn fx:id="purchaseditemprice" prefWidth="45.0" text="Price" />
                                     <TableColumn fx:id="purchaseditemquantity" prefWidth="72.0" text="Quantity" />
@@ -129,7 +129,7 @@
                               </TableView>
                            </children>
                         </AnchorPane>
-                        <Button layoutX="847.0" layoutY="39.0" mnemonicParsing="false" text="Refresh" />
+                        <Button layoutX="847.0" layoutY="39.0" mnemonicParsing="false" onAction="#refreshPurchased" text="Refresh" />
                      </children>
                   </AnchorPane>
               </content>

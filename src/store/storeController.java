@@ -603,6 +603,72 @@ public class storeController implements Initializable {
 			}
 	}
 	
+	
+	@FXML
+	private TableView<Purchased> purchasedtable;
+	@FXML
+	private TableColumn<Purchased, String> purchaseditemname;
+	@FXML
+	private TableColumn<Purchased, String> purchaseditemdescription;
+	@FXML
+	private TableColumn<Purchased, Integer> purchaseditemprice;
+	@FXML
+	private TableColumn<Purchased, Integer> purchaseditemquantity;
+	
+	private ObservableList<Purchased> pur;
+
+	@FXML
+	private void refreshPurchased(ActionEvent event) throws SQLException{
+		
+		try {
+			Connection connection = ConnectDB.getConnection();
+			
+			pur = FXCollections.observableArrayList();
+			
+			ResultSet rs = connection.createStatement().executeQuery("SELECT * FROM purchased");
+			
+			while(rs.next()) {
+				
+				int savedUserID = rs.getInt(1);
+				int itemID = rs.getInt(2);
+				
+				
+				ResultSet rs2 = connection.createStatement().executeQuery("SELECT * FROM items");
+				
+				
+				while(rs2.next()) {
+					
+					if(rs2.getInt(6) == itemID && savedUserID == this.userID) {
+						
+						this.pur.add(new Purchased(rs2.getString(1), rs2.getString(2), rs2.getInt(3), rs.getInt(3)));
+					
+					}
+					
+				}
+				
+				rs2.close();
+			}
+			
+			connection.close();
+			
+			rs.close();
+			
+		}catch(SQLException e) {
+			System.err.println("error: "+e);
+		}
+		this.purchaseditemname.setCellValueFactory(new PropertyValueFactory<Purchased, String>("NAME"));
+		this.purchaseditemdescription.setCellValueFactory(new PropertyValueFactory<Purchased, String>("SPECS"));
+		this.purchaseditemprice.setCellValueFactory(new PropertyValueFactory<Purchased, Integer>("PRICE"));
+		this.purchaseditemquantity.setCellValueFactory(new PropertyValueFactory<Purchased, Integer>("QUANTITY"));
+		
+		this.purchasedtable.setItems(null);
+		
+		this.purchasedtable.setItems(this.pur);
+
+		
+	}
+	
+	
 		
 	
 }
