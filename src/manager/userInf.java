@@ -38,17 +38,16 @@ public class userInf {
 		return ADDRESS.get();
 	}
 	
-	public void setADDRESS(String aDDRESS) {
-		ADDRESS.set(aDDRESS);
+	public void setADDRESS(String address) {
+		ADDRESS.set(address);
 	}
 	
-/////////////////////////////////////////////
 	public String getUSERNAME() {
 		return USERNAME.get();
 	}
 	
-	public void setUSERNAME(String uSERNAME) {
-		USERNAME.set(uSERNAME);
+	public void setUSERNAME(String username) {
+		USERNAME.set(username);
 	}
 /////////////////////////////////////////
 	public String getFIRSTNAME() {
@@ -56,16 +55,16 @@ public class userInf {
 	}
 	
 
-	public void setFIRSTNAME(String fIRSTNAME) {
-		FIRSTNAME.set(fIRSTNAME);
+	public void setFIRSTNAME(String firstname) {
+		FIRSTNAME.set(firstname);
 	}
-/////////////////////////////////////////
+
 	public String getLASTNAME() {
 		return LASTNAME.get();
 	}
 
-	public void setLASTNAME(String lASTNAME) {
-		LASTNAME.set(lASTNAME);
+	public void setLASTNAME(String lastname) {
+		LASTNAME.set(lastname);
 	}
 
 ////////////////////////////////////////////////

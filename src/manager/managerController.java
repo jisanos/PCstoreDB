@@ -43,16 +43,12 @@ public class managerController implements Initializable{
 	
 	@FXML
 	private TableColumn<userInf, String> addresscolumn;
-	
-	private ConnectDB connect;
-	
+		
 	private ObservableList<userInf> inf;
-	
-	private String sql = "SELECT * FROM users";
-	
+			
 	public void initialize(URL url, ResourceBundle rb) {
 		
-		this.connect = new ConnectDB();
+		
 		
 	}
 	
@@ -63,7 +59,7 @@ public class managerController implements Initializable{
 			Connection connection = ConnectDB.getConnection();
 			this.inf = FXCollections.observableArrayList();
 			//excecute the sql statement and save it in resultset
-			ResultSet rs = connection.createStatement().executeQuery(sql); //"SELECT * FROM users"
+			ResultSet rs = connection.createStatement().executeQuery("SELECT * FROM users"); //selects all from users table
 			
 			while(rs.next()) {
 					//get all of the data int the result set (obtained from the database) and sava it in the inf observable list

@@ -16,7 +16,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import manager.managerController;
 import store.storeController;
@@ -36,7 +35,7 @@ public class LoginController implements Initializable{
 	@FXML
 	private ComboBox<selection> selectionbox;  //the drop down where user selects manager or user
 	@FXML
-	private Button login;
+	private Button login; //used later on to call the new GUI scene
 	@FXML
 	private Label attempt;
 	
