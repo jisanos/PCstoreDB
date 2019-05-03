@@ -371,12 +371,67 @@ public class managerController implements Initializable{
 			
 			ps.setInt(1, Integer.parseInt(deleteid.getText()));
 			
-			System.out.print(ps.execute());
+			ps.execute();
 			
 			this.insertionnotifier.setText("Succesfully deleted item!");
 			
 			ps.close();
 			connection.close();
+			
+		}catch(SQLException e) {
+			System.err.print(e);
+		}
+	}
+
+	@FXML
+	private TextField morestockid;
+	
+	@FXML
+	private TextField addingstock;
+	
+	private int getStock() throws SQLException{
+		
+		int storestock = 0;
+		
+		try {
+			Connection connection = ConnectDB.getConnection();
+			
+			PreparedStatement ps1 = connection.prepareStatement("SELECT * FROM items where ID = ?"); //searches for the item in the database via its id
+			
+			//add the user entered id
+			ps1.setInt(1, Integer.parseInt(morestockid.getText()));
+			
+			ResultSet rs = ps1.executeQuery(); //SELECT * FROM items
+			
+			
+			storestock = rs.getInt(5); //gets the stock of the item and stores it
+			
+			ps1.close();
+			connection.close();
+			rs.close();
+			
+		}catch(SQLException e) {
+			System.err.print(e);
+		}
+		
+		return storestock;
+	}
+	
+	@FXML
+	public void addStock(ActionEvent event) throws SQLException{
+		
+		try {
+			
+			Connection connection = ConnectDB.getConnection();
+			
+			PreparedStatement ps = connection.prepareStatement("UPDATE items SET inventory = ? WHERE ID = ?");
+			
+			ps.setInt(1, (getStock() + Integer.parseInt(addingstock.getText())));
+			ps.setInt(2, Integer.parseInt(morestockid.getText()));
+			
+			ps.execute();
+			
+			this.insertionnotifier.setText("Succesfully added stock!");
 			
 		}catch(SQLException e) {
 			System.err.print(e);

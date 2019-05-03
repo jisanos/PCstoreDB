@@ -2,8 +2,13 @@ package application;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 
+import UtilityDB.ConnectDB;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -38,7 +43,7 @@ public class LoginController implements Initializable{
 	private Button login; //used later on to call the new GUI scene
 	@FXML
 	private Label attempt;
-	
+		
 	public static String getUsername() {
 		return usernameString;
 	}
@@ -154,5 +159,105 @@ public class LoginController implements Initializable{
 		
 	}
 	
+	@FXML
+	private TextField createusername;
+	
+	@FXML
+	private TextField createfirstname;
+	
+	@FXML
+	private TextField createlastname;
+	
+	@FXML
+	private PasswordField createpasword;
+	
+	@FXML
+	private PasswordField recreatepassword;
+	
+	@FXML
+	private TextField createaddress;
+	
+	@FXML
+	private TextField insertbalance;
+	
+	@FXML
+	private Label passwordnotifier;
+	
+	private int usrID()throws SQLException {
+		
+		int count = 0;
+			
+		try {
+			
+			Connection connection = ConnectDB.getConnection();
+			
+			ResultSet rs = connection.createStatement().executeQuery("SELECT * FROM useduserid");
+			
+			rs.next();
+				
+			count = rs.getInt(1);
+			
+			PreparedStatement ps = connection.prepareStatement("UPDATE useduserid SET id = ? WHERE id = ?");
+			
+			ps.setInt(1, count+1);
+			ps.setInt(2, count);
+			
+			ps.execute();
+			
+			ps.close();
+			connection.close();
+			rs.close();
+			
+				
+		}
+		catch(SQLException e) {
+			System.err.print(e);
+		}
+		return (count+1);
+	}
+	
+	@FXML
+	public void createUser(ActionEvent event) throws SQLException{
+		
+		
+		if(createpasword.getText().equals(recreatepassword.getText()))
+		{
+			try {
+				
+				Connection connection = ConnectDB.getConnection();
+				
+				PreparedStatement ps = connection.prepareStatement("INSERT INTO users(username, password, firstname, lastname,balance,address,userID) VALUES(?,?,?,?,?,?,?)");
+				
+				ps.setString(1, this.createusername.getText());
+				
+				ps.setString(2, this.createpasword.getText());
+				
+				ps.setString(3, this.createfirstname.getText());
+				
+				ps.setString(4, this.createlastname.getText());
+				
+				ps.setInt(5, Integer.parseInt(this.insertbalance.getText()));
+				
+				ps.setString(6, this.createaddress.getText());
+				
+				ps.setInt(7, usrID());
+				
+				ps.execute();
+				
+				passwordnotifier.setText("Account Succesfully Created");
+				
+				ps.close();
+				connection.close();
+			
+			}catch(SQLException e) {
+				System.err.print(e);
+			}
+		}
+		else
+		{
+			passwordnotifier.setText("Passwords do not match.");
+		}
+		
+	}
 	
 }

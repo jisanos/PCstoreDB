@@ -67,13 +67,7 @@ public class Model {
 			ps.close();
 			rs.close();
 		}
-		
-		
-		
+
 	}
-		
-	
-	
-	
 
 }
