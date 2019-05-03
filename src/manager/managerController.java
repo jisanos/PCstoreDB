@@ -13,10 +13,13 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import store.Categories;
+import store.itemInf;
 
 
 public class managerController implements Initializable{
@@ -41,6 +44,10 @@ public class managerController implements Initializable{
 	private ObservableList<userInf> inf;
 			
 	public void initialize(URL url, ResourceBundle rb) {	
+		
+		this.cat.setItems(FXCollections.observableArrayList(Categories.values()));//adds the data to the selection dropbox from the Categories.java enum
+
+		
 	}
 	
 	//load button action event
@@ -172,5 +179,101 @@ public class managerController implements Initializable{
 		this.salestable.setItems(null);
 		this.salestable.setItems(this.salesInf);
 
+	}
+
+	@FXML
+	private TextField searchbox;
+	@FXML
+	private ComboBox<Categories> cat;
+	@FXML
+	private TableView<itemInf> inventorytable;
+	@FXML
+	private TableColumn<itemInf, String> itemname; 
+	@FXML
+	private TableColumn<itemInf, String> specs;
+	@FXML
+	private TableColumn<itemInf, Integer> price;
+	@FXML
+	private TableColumn<itemInf, String> categorycol;
+	@FXML
+	private TableColumn<itemInf, Integer> stock;
+	@FXML
+	private TableColumn<itemInf, Integer> idcol;
+	
+	private ObservableList<itemInf> itmInf;
+	
+	@FXML
+	private void loadInventory(ActionEvent event) throws SQLException{
+		
+		String opt = ((Categories)this.cat.getValue()).toString(); //turns the selected category into a string
+		
+		String searched = this.searchbox.getText(); //holds the searched item
+				
+		try {
+			
+			Connection connection = ConnectDB.getConnection(); //creates a connection to the database
+			
+			this.itmInf = FXCollections.observableArrayList(); 
+			
+			ResultSet rs = connection.createStatement().executeQuery("SELECT * FROM items"); 
+			
+			while(rs.next()) {
+				
+				if(searched.equals("")) {
+				
+					String storage = rs.getString(4); //stores the item category for comparison
+					
+					if((storage).toUpperCase().equals(opt)) {
+					
+						this.itmInf.add(new itemInf(rs.getString(1),rs.getString(2),rs.getInt(3), storage, rs.getInt(5), rs.getInt(6))); //this sends the contents from the database to
+					}
+					else if(opt.equals("ALL")) {
+						this.itmInf.add(new itemInf(rs.getString(1),rs.getString(2),rs.getInt(3), storage, rs.getInt(5), rs.getInt(6)));  //get managed by the itemInf class
+					}
+				}
+				else {
+					
+					String storageitem = rs.getString(1); //stores the itemname for comparison
+					
+					String storageopt = rs.getString(4); //stores the category from the item
+									
+					if(storageitem.toUpperCase().contains(searched.toUpperCase()) && storageopt.toUpperCase().equals(opt)) {
+						
+						this.itmInf.add(new itemInf(storageitem, rs.getString(2),rs.getInt(3), storageopt, rs.getInt(5), rs.getInt(6)));
+					}
+					
+					else if(storageitem.toUpperCase().contains(searched.toUpperCase()) && opt.toUpperCase().equals("ALL")) {
+						
+						this.itmInf.add(new itemInf(storageitem, rs.getString(2),rs.getInt(3),storageopt, rs.getInt(5), rs.getInt(6)));
+					}
+				}
+			}
+			rs.close();
+			connection.close();
+
+		}catch(SQLException cls) {
+			
+			System.err.println("error "+cls);
+		}
+		
+		//here we set the data to heach of the rows in the table
+		
+		this.itemname.setCellValueFactory(new PropertyValueFactory<itemInf, String>("NAME"));
+		
+		this.specs.setCellValueFactory(new PropertyValueFactory<itemInf, String>("SPECS"));
+
+		this.price.setCellValueFactory(new PropertyValueFactory<itemInf, Integer>("PRICE"));
+		
+		this.categorycol.setCellValueFactory(new PropertyValueFactory<itemInf, String>("CATEGORY"));
+		
+		this.stock.setCellValueFactory(new PropertyValueFactory<itemInf, Integer>("STOCK"));
+		
+		this.idcol.setCellValueFactory(new PropertyValueFactory<itemInf, Integer>("ID"));
+		
+		this.inventorytable.setItems(null);
+		
+		this.inventorytable.setItems(this.itmInf);
+		
+		
 	}
 }

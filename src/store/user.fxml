@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.image.*?>
 <?import javafx.scene.text.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
@@ -73,6 +74,7 @@
                                     <Insets left="10.0" />
                                  </VBox.margin></Text>
                               <Text fx:id="balance" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="175.7294921875" />
+                              <ImageView fitHeight="140.0" fitWidth="225.0" pickOnBounds="true" preserveRatio="true" />
                            </children>
                         </VBox>
                      </children>
