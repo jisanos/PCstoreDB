@@ -66,9 +66,18 @@
                               <TableColumn fx:id="idcol" prefWidth="42.0" text="ID" />
                           </columns>
                         </TableView>
-                        <Button layoutX="67.0" layoutY="97.0" mnemonicParsing="false" onAction="#loadInventory" text="Load" />
-                        <TextField fx:id="searchbox" layoutX="14.0" layoutY="14.0" promptText="Name" />
-                        <ComboBox fx:id="cat" layoutX="25.0" layoutY="53.0" prefWidth="150.0" promptText="CATEGORY" />
+                        <Button layoutX="68.0" layoutY="78.0" mnemonicParsing="false" onAction="#loadInventory" text="Load" />
+                        <TextField fx:id="searchbox" alignment="CENTER" layoutX="14.0" layoutY="14.0" promptText="Search" />
+                        <ComboBox fx:id="cat" layoutX="25.0" layoutY="46.0" prefWidth="150.0" promptText="CATEGORY" />
+                        <TextField fx:id="deleteid" alignment="CENTER" layoutX="25.0" layoutY="113.0" prefHeight="25.0" prefWidth="47.0" promptText="ID" />
+                        <TextField fx:id="insertitemname" alignment="CENTER" layoutX="14.0" layoutY="182.0" prefHeight="25.0" prefWidth="170.0" promptText="Item Name" />
+                        <TextField fx:id="insertitemspecs" alignment="CENTER" layoutX="15.0" layoutY="226.0" prefHeight="25.0" prefWidth="169.0" promptText="Item Specs" />
+                        <TextField fx:id="insertitemprice" alignment="CENTER" layoutX="15.0" layoutY="270.0" prefHeight="25.0" prefWidth="168.0" promptText="Item Price" />
+                        <ComboBox fx:id="insertcategory" layoutX="25.0" layoutY="302.0" prefWidth="150.0" promptText="CATEGORY" />
+                        <TextField fx:id="insertitemstock" layoutX="75.0" layoutY="341.0" prefHeight="25.0" prefWidth="52.0" promptText="Stock" />
+                        <Button layoutX="79.0" layoutY="113.0" mnemonicParsing="false" onAction="#deleteItem" text="Remove Item" />
+                        <Button layoutX="56.0" layoutY="380.0" mnemonicParsing="false" onAction="#insertInventory" text="Insert Item" />
+                        <Label fx:id="insertionnotifier" layoutX="7.0" layoutY="145.0" prefHeight="24.0" prefWidth="193.0" />
                      </children></AnchorPane>
               </content>
             </Tab>

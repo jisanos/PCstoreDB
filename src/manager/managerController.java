@@ -14,6 +14,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -46,7 +47,8 @@ public class managerController implements Initializable{
 	public void initialize(URL url, ResourceBundle rb) {	
 		
 		this.cat.setItems(FXCollections.observableArrayList(Categories.values()));//adds the data to the selection dropbox from the Categories.java enum
-
+		
+		this.insertcategory.setItems(FXCollections.observableArrayList(Categories.values()));
 		
 	}
 	
@@ -275,5 +277,109 @@ public class managerController implements Initializable{
 		this.inventorytable.setItems(this.itmInf);
 		
 		
+	}
+	
+	@FXML
+	private Label insertionnotifier;
+	@FXML
+	private TextField insertitemname;
+	@FXML
+	private TextField insertitemspecs;
+	@FXML
+	private TextField insertitemprice;
+	@FXML
+	private TextField insertitemstock;
+	@FXML
+	private ComboBox<Categories> insertcategory;
+	@FXML
+	private TextField deleteid;
+	
+	private int InvID()throws SQLException {
+		
+		int count = 0;
+		
+
+		
+		try {
+			
+			Connection connection = ConnectDB.getConnection();
+			
+			ResultSet rs = connection.createStatement().executeQuery("SELECT * FROM useditemid");
+			
+			rs.next();
+				
+			count = rs.getInt(1);
+			
+			PreparedStatement ps = connection.prepareStatement("UPDATE useditemid SET id = ? WHERE id = ?");
+			
+			ps.setInt(1, count+1);
+			ps.setInt(2, count);
+			
+			ps.execute();
+			
+			ps.close();
+			connection.close();
+			rs.close();
+			
+				
+		}
+		catch(SQLException e) {
+			System.err.print(e);
+		}
+		return (count+1);
+	}
+	
+	@FXML
+	private void insertInventory(ActionEvent event) throws SQLException{
+		
+		String insertedCat = ((Categories)this.insertcategory.getValue()).toString();
+		
+		String fixedInsertedCat = insertedCat.substring(0,1).toUpperCase() + insertedCat.substring(1).toLowerCase();
+		
+		try {
+			
+			Connection connection = ConnectDB.getConnection();
+			
+			PreparedStatement ps = connection.prepareStatement("INSERT INTO items(name, specs, price, category, inventory, ID) VALUES(?,?,?,?,?,?)");
+			
+			ps.setString(1, insertitemname.getText());
+			ps.setString(2,insertitemspecs.getText());
+			ps.setInt(3, Integer.parseInt(insertitemprice.getText()));
+			ps.setString(4, fixedInsertedCat);
+			ps.setInt(5,Integer.parseInt(insertitemstock.getText()));
+			ps.setInt(6, InvID());
+			
+			ps.execute();
+			
+			insertionnotifier.setText("Succesfully added item!");
+					
+			ps.close();
+			connection.close();
+			
+		}catch(SQLException e){
+			System.err.print(e);
+		}
+	}
+
+	@FXML
+	private void deleteItem(ActionEvent event)throws SQLException{
+		try {
+			
+			Connection connection = ConnectDB.getConnection();
+			
+			PreparedStatement ps = connection.prepareStatement("DELETE FROM items WHERE ID = ?");
+			
+			ps.setInt(1, Integer.parseInt(deleteid.getText()));
+			
+			System.out.print(ps.execute());
+			
+			this.insertionnotifier.setText("Succesfully deleted item!");
+			
+			ps.close();
+			connection.close();
+			
+		}catch(SQLException e) {
+			System.err.print(e);
+		}
 	}
 }
