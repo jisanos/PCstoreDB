@@ -25,31 +25,22 @@ public class managerController implements Initializable{
 	
 	@FXML
 	private TextField userremove;
-	
 	@FXML
 	private TableView<userInf> usertable;
-
 	@FXML
 	private TableColumn<userInf, String> usercolumn;
-	
 	@FXML
 	private TableColumn<userInf, String> firstnamecolumn;
-	
 	@FXML
 	private TableColumn<userInf, String> lastnamecolumn;
-	
 	@FXML
 	private TableColumn<userInf, Integer> balancecolumn;
-	
 	@FXML
 	private TableColumn<userInf, String> addresscolumn;
 		
 	private ObservableList<userInf> inf;
 			
-	public void initialize(URL url, ResourceBundle rb) {
-		
-		
-		
+	public void initialize(URL url, ResourceBundle rb) {	
 	}
 	
 	//load button action event
@@ -58,7 +49,7 @@ public class managerController implements Initializable{
 		try {
 			Connection connection = ConnectDB.getConnection();
 			this.inf = FXCollections.observableArrayList();
-			//excecute the sql statement and save it in resultset
+			
 			ResultSet rs = connection.createStatement().executeQuery("SELECT * FROM users"); //selects all from users table
 			
 			while(rs.next()) {
@@ -113,8 +104,73 @@ public class managerController implements Initializable{
 		
 	}
 	
+	@FXML
+	private TableView<SalesInf> salestable;
+	@FXML
+	private TableColumn<SalesInf, String> salesuser;
+	@FXML
+	private TableColumn<SalesInf, String> salesitem;
+	@FXML
+	private TableColumn<SalesInf, Integer> salesprice;
+	@FXML
+	private TableColumn<SalesInf, Integer> salequantity;
 	
+	private ObservableList<SalesInf> salesInf;
 
+	@FXML
+	private void loadSalesInf(ActionEvent event) throws SQLException{
+		
+		this.salesInf = FXCollections.observableArrayList();
+		
+		try {
+			
+			Connection connection = ConnectDB.getConnection();
+			
+			ResultSet rs = connection.createStatement().executeQuery("SELECT * FROM purchased");
+			
+			while(rs.next()) {
+				int userID = rs.getInt(1);
+				int itemID = rs.getInt(2);
+				
+				PreparedStatement psUsr = connection.prepareStatement("SELECT * FROM users WHERE userID = ?");
+				
+				psUsr.setInt(1, userID);
+				
+				ResultSet rsUsr = psUsr.executeQuery();
+				
+				PreparedStatement psItms = connection.prepareStatement("SELECT * FROM items WHERE ID = ?");
+				
+				psItms.setInt(1, itemID);
+				
+				ResultSet rsItms = psItms.executeQuery();
+				
+				rsItms.next();
+				rsUsr.next();
+				
+				this.salesInf.add(new SalesInf(rsUsr.getString(1), rsItms.getString(1), rsItms.getInt(3), rs.getInt(3)));
+				
+				
+				psUsr.close();
+				rsUsr.close();
+				psItms.close();
+				rsItms.close();
+				
+			}
+						
+			connection.close();
+			rs.close();
+			
+		}catch(SQLException e) {
+			System.err.print(e);
+		}
+		
+		this.salesuser.setCellValueFactory(new PropertyValueFactory<SalesInf, String>("USERNAME"));
+		this.salesitem.setCellValueFactory(new PropertyValueFactory<SalesInf, String>("NAME"));
+		this.salesprice.setCellValueFactory(new PropertyValueFactory<SalesInf, Integer>("PRICE"));
+		this.salequantity.setCellValueFactory(new PropertyValueFactory<SalesInf, Integer>("QUANTITY"));
+		
+		this.salestable.setItems(null);
+		this.salestable.setItems(this.salesInf);
 
-	
+	}
 }

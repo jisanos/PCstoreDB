@@ -49,7 +49,7 @@ public class userInf {
 	public void setUSERNAME(String username) {
 		USERNAME.set(username);
 	}
-/////////////////////////////////////////
+
 	public String getFIRSTNAME() {
 		return FIRSTNAME.get();
 	}
@@ -67,7 +67,7 @@ public class userInf {
 		LASTNAME.set(lastname);
 	}
 
-////////////////////////////////////////////////
+
 	public Integer getBALANCE() {
 		return BALANCE.get();
 	}
