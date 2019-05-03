@@ -21,9 +21,6 @@ public class ConnectDB {
 			cls.printStackTrace();
 		}
 	return null;
-	}
-	
-	
-	
+	}	
 
 }

@@ -5,7 +5,7 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
-public class Purchased {
+public class PurchasedInf {
 
 	private StringProperty NAME = new SimpleStringProperty();
 	
@@ -15,7 +15,7 @@ public class Purchased {
 	
 	private IntegerProperty QUANTITY = new SimpleIntegerProperty();
 	
-	public Purchased(String name, String specs, int price, int quantity)
+	public PurchasedInf(String name, String specs, int price, int quantity)
 	{
 		this.setNAME(name);
 		
@@ -27,36 +27,36 @@ public class Purchased {
 		
 		
 	}
-////////////////////////////////////////	
+	
 	public String getNAME() {
 		return NAME.get();
 	}
 
-	public void setNAME(String nAME) {
-		NAME.set(nAME);
+	public void setNAME(String name) {
+		NAME.set(name);
 	}
-//////////////////////////////////////////
+
 	public String getSPECS() {
 		return SPECS.get();
 	}
 
-	public void setSPECS(String sPECS) {
-		SPECS.set(sPECS);
+	public void setSPECS(String specs) {
+		SPECS.set(specs);
 	}
-/////////////////////////////////
+
 	public int getPRICE() {
 		return PRICE.get();
 	}
-	public void setPRICE(int pRICE) {
-		PRICE.set(pRICE);
+	public void setPRICE(int price) {
+		PRICE.set(price);
 	}
-///////////////////////////////
+
 	public int getQUANTITY() {
 		return QUANTITY.get();
 	}
-	public void setQUANTITY(int qUANTITY)
+	public void setQUANTITY(int quantity)
 	{
-		QUANTITY.set(qUANTITY);
+		QUANTITY.set(quantity);
 	}
 	
 }

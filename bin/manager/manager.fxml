@@ -52,12 +52,31 @@
           </Tab>
             <Tab text="Inventory">
               <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <TableView layoutX="202.0" prefHeight="501.0" prefWidth="798.0">
+                          <columns>
+                            <TableColumn prefWidth="75.0" text="C1" />
+                            <TableColumn prefWidth="75.0" text="C2" />
+                          </columns>
+                        </TableView>
+                     </children></AnchorPane>
               </content>
             </Tab>
             <Tab text="Sales">
               <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <TableView fx:id="salestable" layoutX="130.0" prefHeight="501.0" prefWidth="871.0">
+                          <columns>
+                            <TableColumn fx:id="salesuser" prefWidth="219.0" text="User" />
+                            <TableColumn fx:id="salesitem" prefWidth="432.0" text="Item" />
+                              <TableColumn fx:id="salesprice" prefWidth="86.0" text="Price/Each" />
+                              <TableColumn fx:id="salequantity" prefWidth="133.0" text="Quantity (sold)" />
+                          </columns>
+                        </TableView>
+                        <Button layoutX="29.0" layoutY="52.0" mnemonicParsing="false" text="Refresh" />
+                     </children></AnchorPane>
               </content>
             </Tab>
         </tabs>

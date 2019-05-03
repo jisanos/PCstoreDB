@@ -58,10 +58,7 @@ public class storeController implements Initializable {
 	private TableColumn<itemInf, Integer> idcol;
 	@FXML
 	private TextField idbox; //where user enters ID of purchase
-	@FXML
-	private Button buy; 
-	
-	private ConnectDB connect;
+
 	
 	private ObservableList<itemInf> Inf;
 	
@@ -69,12 +66,10 @@ public class storeController implements Initializable {
 	private String sql = "SELECT * FROM items";
 	
 	public void initialize(URL url, ResourceBundle rb) {
-		
-		this.connect = new ConnectDB(); //new connection to the database
-		
+				
 		this.category.setItems(FXCollections.observableArrayList(Categories.values()));//adds the data to the selection dropbox from the Categories.java enum
 		
-		getBalance(LoginController.getUsername());//gets the balance of the user and displays it
+		getBalance();//gets the balance of the user and displays it
 		
 		getUserID();
 		
@@ -110,7 +105,7 @@ public class storeController implements Initializable {
 		
 	}
 	
-	private void getBalance(String n) {
+	private void getBalance() {
 		
 		try {
 			Connection connection = ConnectDB.getConnection();
@@ -327,7 +322,7 @@ public class storeController implements Initializable {
 					
 					
 					setBalance(pricers);
-					getBalance(LoginController.getUsername());
+					getBalance();
 					
 					notifier.setText("Purchased Succesfully");
 
@@ -535,7 +530,7 @@ public class storeController implements Initializable {
 	
 	@FXML
 	private void addMoreBalance(ActionEvent event)throws SQLException{
-		getBalance(LoginController.getUsername());
+		getBalance();
 		
 		int newBal = (Integer.parseInt(addbalance.getText()) + this.userBalance);
 		
@@ -561,7 +556,7 @@ public class storeController implements Initializable {
 		
 			e.printStackTrace();
 		}
-		getBalance(LoginController.getUsername());
+		getBalance();
 
 		
 	}
@@ -605,17 +600,17 @@ public class storeController implements Initializable {
 	
 	
 	@FXML
-	private TableView<Purchased> purchasedtable;
+	private TableView<PurchasedInf> purchasedtable;
 	@FXML
-	private TableColumn<Purchased, String> purchaseditemname;
+	private TableColumn<PurchasedInf, String> purchaseditemname;
 	@FXML
-	private TableColumn<Purchased, String> purchaseditemdescription;
+	private TableColumn<PurchasedInf, String> purchaseditemdescription;
 	@FXML
-	private TableColumn<Purchased, Integer> purchaseditemprice;
+	private TableColumn<PurchasedInf, Integer> purchaseditemprice;
 	@FXML
-	private TableColumn<Purchased, Integer> purchaseditemquantity;
+	private TableColumn<PurchasedInf, Integer> purchaseditemquantity;
 	
-	private ObservableList<Purchased> pur;
+	private ObservableList<PurchasedInf> pur;
 
 	@FXML
 	private void refreshPurchased(ActionEvent event) throws SQLException{
@@ -640,7 +635,7 @@ public class storeController implements Initializable {
 					
 					if(rs2.getInt(6) == itemID && savedUserID == this.userID) {
 						
-						this.pur.add(new Purchased(rs2.getString(1), rs2.getString(2), rs2.getInt(3), rs.getInt(3)));
+						this.pur.add(new PurchasedInf(rs2.getString(1), rs2.getString(2), rs2.getInt(3), rs.getInt(3)));
 					
 					}
 					
@@ -656,10 +651,10 @@ public class storeController implements Initializable {
 		}catch(SQLException e) {
 			System.err.println("error: "+e);
 		}
-		this.purchaseditemname.setCellValueFactory(new PropertyValueFactory<Purchased, String>("NAME"));
-		this.purchaseditemdescription.setCellValueFactory(new PropertyValueFactory<Purchased, String>("SPECS"));
-		this.purchaseditemprice.setCellValueFactory(new PropertyValueFactory<Purchased, Integer>("PRICE"));
-		this.purchaseditemquantity.setCellValueFactory(new PropertyValueFactory<Purchased, Integer>("QUANTITY"));
+		this.purchaseditemname.setCellValueFactory(new PropertyValueFactory<PurchasedInf, String>("NAME"));
+		this.purchaseditemdescription.setCellValueFactory(new PropertyValueFactory<PurchasedInf, String>("SPECS"));
+		this.purchaseditemprice.setCellValueFactory(new PropertyValueFactory<PurchasedInf, Integer>("PRICE"));
+		this.purchaseditemquantity.setCellValueFactory(new PropertyValueFactory<PurchasedInf, Integer>("QUANTITY"));
 		
 		this.purchasedtable.setItems(null);
 		
@@ -668,8 +663,6 @@ public class storeController implements Initializable {
 		
 	}
 	
-	
-		
 	
 }
 
