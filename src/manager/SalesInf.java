@@ -31,7 +31,7 @@ public class SalesInf {
 		USERNAME.set(username);
 	}
 	
-	private String getUSERNAME() {
+	public String getUSERNAME() {
 		return USERNAME.get();
 	}
 
