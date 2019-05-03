@@ -62,9 +62,7 @@ public class storeController implements Initializable {
 	
 	private ObservableList<itemInf> Inf;
 	
-	//sql commands to connect to the items table
-	private String sql = "SELECT * FROM items";
-	
+		
 	public void initialize(URL url, ResourceBundle rb) {
 				
 		this.category.setItems(FXCollections.observableArrayList(Categories.values()));//adds the data to the selection dropbox from the Categories.java enum
@@ -76,7 +74,7 @@ public class storeController implements Initializable {
 		try {
 			getUserInfo();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
 		
@@ -171,7 +169,7 @@ public class storeController implements Initializable {
 			
 			this.Inf = FXCollections.observableArrayList(); 
 			
-			ResultSet rs = connection.createStatement().executeQuery(sql); //"SELECT * FROM items"
+			ResultSet rs = connection.createStatement().executeQuery("SELECT * FROM items"); 
 			
 			while(rs.next()) {
 				
@@ -344,9 +342,7 @@ public class storeController implements Initializable {
 			catch(SQLException cls) {
 			System.err.print(cls);
 		}
-		
-		
-		
+				
 	}
 	
 	@FXML
@@ -593,7 +589,7 @@ public class storeController implements Initializable {
 			try {
 				getUserInfo();
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
+				
 				e.printStackTrace();
 			}
 	}
