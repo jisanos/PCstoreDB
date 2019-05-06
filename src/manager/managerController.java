@@ -92,12 +92,11 @@ public class managerController implements Initializable{
 	//action event for the remove user button in the GUI
 	@FXML
 	private void removeUser(ActionEvent event) throws SQLException {
-		String deleteSql = "DELETE FROM users WHERE username = ?"; //delete from the users table where the username is equal to
 		
 		try {
 			Connection connection = ConnectDB.getConnection();
 			
-			PreparedStatement ps = connection.prepareStatement(deleteSql); 
+			PreparedStatement ps = connection.prepareStatement("DELETE FROM users WHERE username = ?"); //delete from the users table where the username is equal to
 			
 			ps.setString(1, this.userremove.getText());//finish the script by inserting the entered string
 			
