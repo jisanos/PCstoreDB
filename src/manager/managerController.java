@@ -153,11 +153,11 @@ public class managerController implements Initializable{
 				
 				ResultSet rsItms = psItms.executeQuery();
 				
-				rsItms.next();
-				rsUsr.next();
-				
-				this.salesInf.add(new SalesInf(rsUsr.getString(1), rsItms.getString(1), rsItms.getInt(3), rs.getInt(3)));
-				
+				while(rsItms.next()) {
+					while(rsUsr.next()) {
+						this.salesInf.add(new SalesInf(rsUsr.getString(1), rsItms.getString(1), rsItms.getInt(3), rs.getInt(3)));
+					}
+				}
 				
 				psUsr.close();
 				rsUsr.close();
