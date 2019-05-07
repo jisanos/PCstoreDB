@@ -104,6 +104,7 @@ public class managerController implements Initializable{
 			
 			connection.close(); 
 			
+			ps.close();
 			
 		}catch(SQLException cls) {
 			System.err.println("Error "+cls);
@@ -296,9 +297,7 @@ public class managerController implements Initializable{
 	private int InvID()throws SQLException {
 		
 		int count = 0;
-		
-
-		
+				
 		try {
 			
 			Connection connection = ConnectDB.getConnection();
@@ -320,7 +319,6 @@ public class managerController implements Initializable{
 			connection.close();
 			rs.close();
 			
-				
 		}
 		catch(SQLException e) {
 			System.err.print(e);
