@@ -1,3 +1,3 @@
-A computer store built with JavaFX and SQLite.
+A computer store built with JavaFX and SQLite Database.
 
-JDK 8 works best at working with this project.
+Built with JDK 8
